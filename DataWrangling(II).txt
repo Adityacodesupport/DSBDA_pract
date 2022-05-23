@@ -1,0 +1,70 @@
+import pandas as pd
+from sklearn import preprocessing
+import sklearn as sns 
+import matplotlib.pyplot as plt
+import numpy as np
+%matplotlib inline
+
+df=pd.read_csv('DW2.csv')
+
+df.isnull()
+series = pd.isnull(df["math_score"])
+df[series]
+df.notnull()
+
+df['gender'].unique()
+from sklearn.preprocessing import LabelEncoder
+le=LabelEncoder()
+df['gender']=le.fit_transform(df['gender'])
+newdf=df
+df['gender'].unique()
+
+missing_values=['Na','na']
+df=pd.read_csv('DW2.csv',na_values=missing_values)
+df
+
+ndf=df
+df.fillna(0)
+
+df['reading_score']=df['reading_score'].fillna(df['reading_score'].mean())
+ndf=df
+ndf.replace(to_replace=np.nan,value=-99)
+ndf.dropna()
+ndf.dropna(how='all')
+ndf.dropna(axis=1)
+cols=['math_score','reading_score']
+cols
+df.boxplot(cols)
+
+print(np.where(df['math_score']>75))
+sort_rscore=sorted(df['reading_score'])
+sort_rscore
+
+q1=np.percentile(sort_rscore,25)
+q3=np.percentile(sort_rscore,75)
+print(q1,q3)
+iqr=q3-q1
+print(iqr)
+
+upper_bound=q3+(1.5*iqr)
+lwr_bound=q1-(1.5*iqr)
+
+print(lwr_bound,upper_bound)
+r_outliers=[]
+for i in sort_rscore:
+    if(i<lwr_bound or i>upper_bound):
+        r_outliers.append(i)
+print(r_outliers)
+col=['reading_score']
+col
+
+mean=np.mean(sort_rscore)
+mean
+redefined_df=df
+redefined_df['reading_score']=np.where(redefined_df['reading_score']>upper_bound,mean,redefined_df['reading_score'])
+redefined_df=df
+redefined_df['reading_score']=np.where(redefined_df['reading_score']<lwr_bound,mean,redefined_df['reading_score'])
+new_df=df['math_score'].plot(kind='hist')
+
+df['log_math']=np.log10(df['math_score'])
+df['log_math'].plot(kind='hist')

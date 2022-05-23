@@ -1,0 +1,34 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn import preprocessing
+%matplotlib inline
+
+df=pd.read_csv('Iris.csv')
+df
+
+df.shape
+df.describe()
+
+df.iloc[:,1:4]
+df.sort_values('SepalLengthCm').head(n=10)
+
+df.groupby(['PetalWidthCm'])['SepalLengthCm'].apply(lambda x:x.isnull().sum())
+df.dtypes
+
+df['PetalLengthCm']=df['PetalLengthCm'].astype("int")
+
+x = df[['PetalLengthCm']].values.astype(float)
+
+min_max_scaler = preprocessing.MinMaxScaler()
+x_scaled = min_max_scaler.fit_transform(x)
+
+df_normalized = pd.DataFrame(x_scaled)
+df.dtypes
+
+df['Species'].unique()
+label_encoder=preprocessing.LabelEncoder()
+df['Species']=label_encoder.fit_transform(df['Species'])
+df['Species'].unique()
+one_hot_df=pd.get_dummies(df,prefix="Aditya",columns=['Species'], drop_first=False)

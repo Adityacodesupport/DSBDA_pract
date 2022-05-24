@@ -1,0 +1,36 @@
+var var1:String="Ankit"
+
+var var1="Khatode"
++
+-
+==
+
+//looping 
+for(a<-1 to 10){
+println("value of a:"+a);
+}
+
+//if else
+
+var var3=1
+if(var3==1)
+{
+println("True")
+}
+else{
+println("False")
+}
+
+def mul2(m:Int):Int=m*10
+mul2(2)
+
+object HelloWorld{
+def main(args:Array[String]){
+println("Hello,world!")
+}
+}
+
+
+scalac HelloWorld.scala
+
+scala HelloWorld
